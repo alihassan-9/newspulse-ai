@@ -1,0 +1,6 @@
+# Local editor/agent settings
+.claude/
+
+# OS noise
+.DS_Store
+Thumbs.db

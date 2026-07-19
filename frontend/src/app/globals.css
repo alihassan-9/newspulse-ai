@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+:root {
+  --background: #eceafc;
+  --foreground: #17152a;
+  --surface: #ffffff;
+  --muted: #f7f6fd;
+  --primary: #7c5cff;
+  --primary-600: #6d4bf0;
+
+  /* Elevation scale — soft, tinted shadows for a premium feel */
+  --shadow-xs: 0 1px 2px rgba(30, 22, 74, 0.06);
+  --shadow-sm: 0 2px 8px rgba(30, 22, 74, 0.06);
+  --shadow-md: 0 8px 24px rgba(30, 22, 74, 0.08);
+  --shadow-lg: 0 18px 48px rgba(30, 22, 74, 0.14);
+  --ring: 0 0 0 3px rgba(124, 92, 255, 0.28);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  /* Layered radial tints give the lavender canvas depth without an image */
+  background:
+    radial-gradient(1100px 620px at 88% -8%, rgba(124, 92, 255, 0.16), transparent 60%),
+    radial-gradient(900px 520px at -6% 4%, rgba(236, 72, 153, 0.1), transparent 55%),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(124, 92, 255, 0.22);
+  color: var(--foreground);
+}
+
+/* ---- Editorial typography ---- */
+/* Serif display for headlines: tuned optical size + tight tracking read premium. */
+.font-display {
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+.font-display-tight {
+  letter-spacing: -0.025em;
+}
+
+/* Serif reading column for article bodies (news-magazine feel). */
+.article-body {
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  font-size: 1.19rem;
+  line-height: 1.75;
+  letter-spacing: 0.003em;
+  color: #2a2740;
+}
+.article-body p + p {
+  margin-top: 1.15rem;
+}
+
+/* Uppercase editorial eyebrow/kicker label */
+.eyebrow {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  font-size: 0.6875rem;
+}
+
+/* Consistent, brand-tinted keyboard focus everywhere */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: 12px;
+}
+
+/* Slim scrollbars */
+.scroll-slim::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+.scroll-slim::-webkit-scrollbar-thumb {
+  background: #d6cff0;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.scroll-slim::-webkit-scrollbar-thumb:hover {
+  background: #c3b8ec;
+  background-clip: padding-box;
+}
+.scroll-slim::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-slim {
+  scrollbar-width: thin;
+  scrollbar-color: #d6cff0 transparent;
+}
+
+/* ---- Reusable premium primitives ---- */
+
+.card-surface {
+  background: var(--surface);
+  border: 1px solid rgba(124, 92, 255, 0.1);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+.card-surface:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  border-color: rgba(124, 92, 255, 0.28);
+}
+
+/* Skeleton shimmer for loading states */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #ece8f8;
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  animation: shimmer 1.4s infinite;
+}
+
+/* Entrance animations */
+.animate-fade-up {
+  animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.animate-scale-in {
+  animation: scale-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

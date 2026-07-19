@@ -1,0 +1,1 @@
+"""The cooperating newsroom agents."""
