@@ -58,6 +58,7 @@ export default function EventCard({ event }: { event: NewsEvent }) {
         <h3 className="font-display line-clamp-2 text-[17px] leading-[1.28] text-slate-900 transition group-hover:text-violet-700">
           {event.title}
         </h3>
+        <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-slate-500">{event.summary}</p>
         <div className="mt-auto flex items-center justify-between pt-3.5">
           <span className="inline-flex items-center gap-1.5 truncate text-xs text-slate-400">
             <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-100 text-[9px] font-bold text-violet-600">

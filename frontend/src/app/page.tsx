@@ -39,7 +39,8 @@ export default async function Home() {
       if (a.verified !== b.verified) return a.verified ? -1 : 1;
       return (b.publishedAt ?? 0) - (a.publishedAt ?? 0);
     })
-    .slice(0, 6);
+    .slice(0, 7);
+  const [lead, ...rest] = feed;
 
   const editorsPick = all.filter((e) => e.verified).slice(0, 5);
 
@@ -136,16 +137,60 @@ export default async function Home() {
             ))}
           </div>
 
-          {feed.length === 0 ? (
+          {feed.length === 0 || !lead ? (
             <p className="rounded-2xl border border-dashed border-slate-200 bg-white p-10 text-center text-sm text-slate-400">
               No live stories yet. The feeds may be temporarily unreachable.
             </p>
           ) : (
-            <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2">
-              {feed.map((e) => (
-                <EventCard key={e.id} event={e} />
-              ))}
-            </div>
+            <>
+              {/* Featured lead story */}
+              <Link
+                href={`/article/${lead.id}`}
+                className="card-surface animate-fade-up group mb-7 flex flex-col overflow-hidden rounded-3xl sm:flex-row"
+              >
+                <div className="relative aspect-[16/10] sm:aspect-auto sm:w-[46%] sm:shrink-0">
+                  {lead.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={lead.image} alt="" className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" />
+                  ) : (
+                    <div className="flex h-full min-h-[220px] w-full items-center justify-center bg-gradient-to-br from-violet-500 to-fuchsia-400">
+                      <span className="text-4xl font-black text-white/90">{monogram(lead.sources[0] ?? "NP")}</span>
+                    </div>
+                  )}
+                  {lead.verified && (
+                    <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-emerald-500/95 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
+                      ✓ {lead.sourceCount} sources
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-1 flex-col justify-center p-6 sm:p-7">
+                  <div className="mb-2 flex items-center gap-2">
+                    <span className="eyebrow text-red-600">Top story</span>
+                    <span className="text-slate-300">•</span>
+                    <span className={`eyebrow ${categoryColor(lead.category)}`}>{lead.category}</span>
+                    <span className="text-slate-300">•</span>
+                    <span className="text-xs text-slate-400">{timeAgo(lead.publishedAt)}</span>
+                  </div>
+                  <h3 className="font-display font-display-tight text-[26px] leading-[1.15] text-slate-900 transition group-hover:text-violet-700">
+                    {lead.title}
+                  </h3>
+                  <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-500">{lead.summary}</p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-violet-600">
+                    Read the story
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 transition group-hover:translate-x-1" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </span>
+                </div>
+              </Link>
+
+              {/* Secondary stories */}
+              <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2">
+                {rest.map((e) => (
+                  <EventCard key={e.id} event={e} />
+                ))}
+              </div>
+            </>
           )}
         </div>
 
