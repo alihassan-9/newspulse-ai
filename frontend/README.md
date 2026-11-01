@@ -1,18 +1,28 @@
-# NewsPulse AI Frontend
+# NewsPulse AI · Frontend
 
-This frontend delivers a lightweight, premium newsroom experience for verified U.S. and celebrity news using a single Next.js + TypeScript stack.
+Next.js 16 (App Router) editorial dashboard for NewsPulse AI.
 
-## Current scope
-- Premium editorial-style landing dashboard
-- Focused coverage for U.S. news and celebrity entertainment
-- Verified-source storytelling layout
-- Lightweight architecture intended to reduce deployment cost
+## Responsibilities
 
-## Run locally
+- US, International, and Celebrity news sections with category filtering and search
+- Article reader with full-text extraction and PDF export
+- Broadcast-style social post generator (`/api/generate-post`)
+- Newsletter data endpoint (`/api/newsletter`)
+- Built-in RSS ingestion used as a fallback whenever the FastAPI backend is unreachable
+
+## Development
+
 ```bash
 npm install
-npm run dev
+cp .env.example .env.local   # optional: GEMINI_API_KEY, BACKEND_URL
+npm run dev                  # http://localhost:3000
 ```
 
-## Notes
-Google ADK is not required for the current prototype. The implementation stays in Next.js and Node to keep the initial deployment simple and lower-cost.
+| Script          | Purpose                    |
+| --------------- | -------------------------- |
+| `npm run dev`   | Start the dev server       |
+| `npm run build` | Create a production build  |
+| `npm run start` | Serve the production build |
+| `npm run lint`  | Run ESLint                 |
+
+See the [root README](../README.md) for the full architecture and configuration reference.

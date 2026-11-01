@@ -6,3 +6,23 @@ AGENTS.md
 # OS noise
 .DS_Store
 Thumbs.db
+
+# Environment files (never commit secrets)
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+
+# Editors
+.vscode/
+.idea/
